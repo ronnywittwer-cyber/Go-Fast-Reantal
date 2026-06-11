@@ -79,9 +79,9 @@ export default function Conditions() {
           {conditions.map((c) => (
             <div
               key={c.title}
-              className="group rounded-2xl border border-ink-border bg-ink-card p-6 transition-colors hover:border-brand-red/60"
+              className="group rounded-2xl border border-ink-border bg-ink-card p-6 transition-colors hover:border-brand-blue/60"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-red/10 text-brand-red transition-colors group-hover:bg-brand-red group-hover:text-white">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-blue/10 text-brand-sky transition-colors group-hover:bg-brand-blue group-hover:text-white">
                 <ConditionIcon name={c.icon} />
               </div>
               <h3 className="mt-4 text-lg font-bold text-white">{c.title}</h3>

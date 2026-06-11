@@ -1,4 +1,5 @@
 import { company } from "@/lib/company";
+import { Wordmark } from "./Navbar";
 
 export default function Footer() {
   return (
@@ -7,13 +8,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-3">
           {/* Marke */}
           <div>
-            <div className="flex items-center gap-2 font-extrabold tracking-tight">
-              <span className="text-xl text-white">Go</span>
-              <span className="rounded-md bg-brand-red px-2 py-0.5 text-xl text-white">
-                Fast
-              </span>
-              <span className="text-xl text-brand-neon">Rental</span>
-            </div>
+            <Wordmark />
             <p className="mt-4 max-w-xs text-sm text-zinc-400">
               Ihre persönliche Autovermietung in {company.address.city}.
               Unbegrenzte Kilometer, voll versichert, In- und Ausland erlaubt.
@@ -30,7 +25,7 @@ export default function Footer() {
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-zinc-400">
               <li className="flex items-start gap-3">
-                <span className="mt-0.5 text-brand-red">📍</span>
+                <span className="mt-0.5 text-brand-sky">📍</span>
                 <span>
                   {company.address.street}
                   <br />
@@ -38,10 +33,10 @@ export default function Footer() {
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-brand-red">📞</span>
+                <span className="text-brand-sky">📞</span>
                 <a
                   href={company.phoneHref}
-                  className="transition-colors hover:text-brand-neon"
+                  className="transition-colors hover:text-brand-sky"
                 >
                   {company.phone}
                 </a>
@@ -56,13 +51,13 @@ export default function Footer() {
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-zinc-400">
               <li className="flex items-center gap-3">
-                <span className="text-brand-red">🕘</span>
+                <span className="text-brand-sky">🕘</span>
                 <span>{company.openingHours}</span>
               </li>
               <li>
                 <a
                   href="#buchung"
-                  className="mt-2 inline-block rounded-full bg-brand-neon px-5 py-2 text-sm font-bold text-ink transition-transform hover:scale-105"
+                  className="mt-2 inline-block rounded-full bg-brand-blue px-5 py-2 text-sm font-bold text-white transition-transform hover:scale-105"
                 >
                   Fahrzeug anfragen
                 </a>

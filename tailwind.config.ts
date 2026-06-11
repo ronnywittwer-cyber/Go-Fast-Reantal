@@ -8,27 +8,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Markenfarben "Go Fast Rental"
+        // Markenfarben "Go Fast Rental" – abgeleitet aus dem blauen Logo
         ink: {
-          DEFAULT: "#0a0a0b",
-          soft: "#121214",
-          card: "#17171a",
-          border: "#26262b",
+          DEFAULT: "#0a1020", // tiefes Navy
+          soft: "#0d1426",
+          card: "#121b33",
+          border: "#243152",
         },
         brand: {
-          // Sportliches Rot
-          red: "#e10600",
-          redDark: "#b30500",
-          // Neongelb als Akzent
-          neon: "#d7ff00",
+          // Royales Blau aus dem Logo
+          blue: "#2563eb",
+          blueDark: "#1741a6",
+          navy: "#0f244f",
+          // Helles Sky-Blau als Akzent (ersetzt das frühere Neongelb)
+          sky: "#5fa8ff",
+          // Stahlgrau wie der "RENTAL"-Schriftzug im Logo
+          steel: "#9aa3b8",
         },
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 40px -10px rgba(225, 6, 0, 0.55)",
-        neon: "0 0 30px -8px rgba(215, 255, 0, 0.55)",
+        glow: "0 0 40px -10px rgba(37, 99, 235, 0.55)",
+        sky: "0 0 30px -8px rgba(95, 168, 255, 0.55)",
       },
       keyframes: {
         "fade-up": {

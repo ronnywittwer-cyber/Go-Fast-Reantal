@@ -20,9 +20,9 @@ interface FormErrors {
 }
 
 const inputBase =
-  "w-full rounded-xl border border-ink-border bg-ink px-4 py-3 text-sm text-white placeholder:text-zinc-500 transition-colors focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red";
+  "w-full rounded-xl border border-ink-border bg-ink px-4 py-3 text-sm text-white placeholder:text-zinc-500 transition-colors focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue";
 const labelBase = "mb-1.5 block text-sm font-medium text-zinc-300";
-const errorText = "mt-1 text-xs font-medium text-brand-red";
+const errorText = "mt-1 text-xs font-medium text-rose-400";
 
 export default function ContactForm({
   selectedCar,
@@ -96,8 +96,8 @@ export default function ContactForm({
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-2xl rounded-2xl border border-brand-neon/40 bg-ink-card p-10 text-center shadow-neon">
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-neon/15 text-brand-neon">
+      <div className="mx-auto max-w-2xl rounded-2xl border border-brand-sky/40 bg-ink-card p-10 text-center shadow-sky">
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-sky/15 text-brand-sky">
           <svg
             className="h-8 w-8"
             viewBox="0 0 24 24"
@@ -120,7 +120,7 @@ export default function ContactForm({
         <button
           type="button"
           onClick={() => setSubmitted(false)}
-          className="mt-6 rounded-full border border-ink-border bg-ink px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:border-brand-neon hover:text-brand-neon"
+          className="mt-6 rounded-full border border-ink-border bg-ink px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:border-brand-sky hover:text-brand-sky"
         >
           Weitere Anfrage senden
         </button>
@@ -248,17 +248,17 @@ export default function ContactForm({
       {/* Ausweis-/Führerschein-Upload (verpflichtend) */}
       <div className="mt-5" data-error={Boolean(errors.idDocument)}>
         <label htmlFor="idDocument" className={labelBase}>
-          Ausweis / Führerschein <span className="text-brand-red">*</span>
+          Ausweis / Führerschein <span className="text-brand-sky">*</span>
         </label>
         <label
           htmlFor="idDocument"
           className={`flex cursor-pointer items-center gap-3 rounded-xl border border-dashed px-4 py-4 transition-colors ${
             errors.idDocument
-              ? "border-brand-red bg-brand-red/5"
-              : "border-ink-border bg-ink hover:border-brand-neon"
+              ? "border-rose-500 bg-rose-500/5"
+              : "border-ink-border bg-ink hover:border-brand-sky"
           }`}
         >
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-neon/10 text-brand-neon">
+          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-sky/10 text-brand-sky">
             <svg
               className="h-5 w-5"
               viewBox="0 0 24 24"
@@ -302,7 +302,7 @@ export default function ContactForm({
 
       <button
         type="submit"
-        className="mt-7 w-full rounded-full bg-brand-red px-6 py-4 text-base font-bold text-white shadow-glow transition-transform hover:scale-[1.02] active:scale-100"
+        className="mt-7 w-full rounded-full bg-brand-blue px-6 py-4 text-base font-bold text-white shadow-glow transition-transform hover:scale-[1.02] active:scale-100"
       >
         Buchungsanfrage senden
       </button>

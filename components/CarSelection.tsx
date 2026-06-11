@@ -36,9 +36,9 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                 role="radio"
                 aria-checked={isActive}
                 onClick={() => onSelect(car.id)}
-                className={`group relative overflow-hidden rounded-2xl border text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-neon ${
+                className={`group relative overflow-hidden rounded-2xl border text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-sky ${
                   isActive
-                    ? "border-brand-red bg-ink-card shadow-glow"
+                    ? "border-brand-blue bg-ink-card shadow-glow"
                     : "border-ink-border bg-ink-card hover:border-zinc-600"
                 }`}
               >
@@ -46,7 +46,7 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                 <span
                   className={`absolute right-4 top-4 z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 transition-all ${
                     isActive
-                      ? "border-brand-red bg-brand-red text-white"
+                      ? "border-brand-blue bg-brand-blue text-white"
                       : "border-zinc-500 bg-ink/60 text-transparent"
                   }`}
                   aria-hidden="true"
@@ -98,7 +98,7 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-lg font-bold text-white">{car.name}</h3>
-                    <span className="whitespace-nowrap rounded-md bg-brand-neon/10 px-2 py-1 text-xs font-bold text-brand-neon">
+                    <span className="whitespace-nowrap rounded-md bg-brand-sky/10 px-2 py-1 text-xs font-bold text-brand-sky">
                       {car.pricePerDay}
                     </span>
                   </div>
@@ -116,7 +116,7 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
 
                   <span
                     className={`mt-4 block text-sm font-semibold ${
-                      isActive ? "text-brand-red" : "text-zinc-500"
+                      isActive ? "text-brand-sky" : "text-zinc-500"
                     }`}
                   >
                     {isActive ? "✓ Ausgewählt" : "Auswählen"}
