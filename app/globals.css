@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-zinc-100 antialiased;
+}
+
+/* Dezenter Hintergrund-Verlauf für das edle, sportliche Design */
+.bg-grid {
+  background-image:
+    radial-gradient(circle at 20% 0%, rgba(225, 6, 0, 0.12), transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(215, 255, 0, 0.06), transparent 40%);
+}
+
+/* Custom Datepicker / File-Input Tweaks für dunkles Design */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
