@@ -1,5 +1,5 @@
 import { company } from "@/lib/company";
-import { Wordmark } from "./Navbar";
+import { Logo } from "./Logo";
 
 export default function Footer() {
   return (
@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-3">
           {/* Marke */}
           <div>
-            <Wordmark />
+            <Logo className="h-10 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-zinc-400">
               Ihre persönliche Autovermietung in {company.address.city}.
               Unbegrenzte Kilometer, voll versichert, In- und Ausland erlaubt.
