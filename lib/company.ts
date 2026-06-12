@@ -51,53 +51,62 @@ export const conditions = [
 
 export type CarId = "car-1" | "car-2" | "car-3" | "car-4" | "car-5";
 
+export interface CarPrices {
+  day: number; // CHF pro Tag
+  week: number; // CHF pro Woche
+  month: number; // CHF pro Monat
+}
+
 export interface Car {
   id: CarId;
   name: string;
-  // Bild-Platzhalter: Lege deine echten Bilder unter /public/cars/ ab
-  // und trage den Pfad hier ein, z.B. "/cars/auto-1.jpg".
+  // Bilder liegen unter /public/cars/.
   image: string | null;
-  pricePerDay: string; // Preis-Platzhalter, später ersetzen
+  prices: CarPrices;
   specs: string[];
 }
 
+// Formatiert einen Betrag im Schweizer Stil, z.B. 1500 -> "CHF 1’500.–"
+export function formatChf(amount: number): string {
+  return "CHF " + amount.toLocaleString("de-CH") + ".–";
+}
+
 // Die 5 Fahrzeuge. Bilder liegen unter /public/cars/.
-// Preise sind noch Platzhalter ("CHF XX.– / Tag") – einfach hier eintragen.
-// Specs bei Bedarf anpassen.
+// Preise (Tag / Woche / Monat) und Specs bei Bedarf hier anpassen.
 export const cars: Car[] = [
   {
     id: "car-1",
     name: "Lamborghini Aventador SVJ",
     image: "/cars/lamborghini.jpg",
-    pricePerDay: "CHF XX.– / Tag",
+    prices: { day: 40, week: 150, month: 500 },
     specs: ["Supersportwagen", "2 Sitze", "V12"],
   },
   {
     id: "car-2",
     name: "Mercedes A-Klasse",
     image: "/cars/mercedes-a-klasse.jpg",
-    pricePerDay: "CHF XX.– / Tag",
+    prices: { day: 40, week: 150, month: 500 },
     specs: ["Kompaktklasse", "5 Sitze", "Automatik"],
   },
   {
     id: "car-3",
     name: "Opel Astra",
     image: "/cars/opel.jpg",
-    pricePerDay: "CHF XX.– / Tag",
+    prices: { day: 40, week: 150, month: 500 },
     specs: ["Kompaktklasse", "5 Sitze", "Klimaanlage"],
   },
   {
     id: "car-4",
     name: "Smart Fortwo",
     image: "/cars/smart.jpg",
-    pricePerDay: "CHF XX.– / Tag",
+    prices: { day: 50, week: 220, month: 800 },
     specs: ["Stadtflitzer", "2 Sitze", "Wendig"],
   },
   {
     id: "car-5",
     name: "Opel Kadett – Oldtimer",
     image: "/cars/opel-kadett.jpg",
-    pricePerDay: "CHF XX.– / Tag",
+    prices: { day: 40, week: 150, month: 500 },
     specs: ["Oldtimer", "Klassiker", "Benzin"],
   },
 ];

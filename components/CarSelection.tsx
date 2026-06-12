@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { cars, type CarId } from "@/lib/company";
+import { cars, formatChf, type CarId } from "@/lib/company";
 
 interface CarSelectionProps {
   selected: CarId | null;
@@ -96,12 +96,7 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
 
                 {/* Karten-Inhalt */}
                 <div className="p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="text-lg font-bold text-white">{car.name}</h3>
-                    <span className="whitespace-nowrap rounded-md bg-brand-sky/10 px-2 py-1 text-xs font-bold text-brand-sky">
-                      {car.pricePerDay}
-                    </span>
-                  </div>
+                  <h3 className="text-lg font-bold text-white">{car.name}</h3>
 
                   <ul className="mt-3 flex flex-wrap gap-2">
                     {car.specs.map((spec) => (
@@ -113,6 +108,26 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                       </li>
                     ))}
                   </ul>
+
+                  {/* Preise: Tag prominent, Woche & Monat daneben */}
+                  <div className="mt-4 flex items-end justify-between gap-3 rounded-xl border border-ink-border bg-ink/40 px-3 py-2.5">
+                    <div className="leading-none">
+                      <span className="text-xl font-black text-white">
+                        {formatChf(car.prices.day)}
+                      </span>
+                      <span className="text-xs text-zinc-400"> / Tag</span>
+                    </div>
+                    <div className="text-right text-xs leading-tight text-zinc-400">
+                      <div>
+                        {formatChf(car.prices.week)}{" "}
+                        <span className="text-zinc-500">/ Woche</span>
+                      </div>
+                      <div>
+                        {formatChf(car.prices.month)}{" "}
+                        <span className="text-zinc-500">/ Monat</span>
+                      </div>
+                    </div>
+                  </div>
 
                   <span
                     className={`mt-4 block text-sm font-semibold ${
