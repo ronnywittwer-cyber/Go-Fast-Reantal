@@ -28,7 +28,7 @@ export default function Navbar() {
           href={company.phoneHref}
           className="rounded-full border border-brand-sky/40 bg-brand-sky/10 px-4 py-2 text-sm font-semibold text-brand-sky transition-all hover:bg-brand-sky hover:text-ink"
         >
-          {company.phone}
+          Schnell &amp; unkompliziert
         </a>
       </div>
     </header>
