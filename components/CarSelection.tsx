@@ -29,25 +29,32 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
         >
           {cars.map((car) => {
             const isActive = selected === car.id;
+            const disabled = !car.available;
             return (
               <button
                 type="button"
                 key={car.id}
                 role="radio"
                 aria-checked={isActive}
-                onClick={() => onSelect(car.id)}
+                aria-disabled={disabled}
+                disabled={disabled}
+                onClick={() => !disabled && onSelect(car.id)}
                 className={`group relative overflow-hidden rounded-2xl border text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-sky ${
-                  isActive
-                    ? "border-brand-blue bg-ink-card shadow-glow"
-                    : "border-ink-border bg-ink-card hover:border-zinc-600"
+                  disabled
+                    ? "cursor-not-allowed border-ink-border bg-ink-card opacity-60"
+                    : isActive
+                      ? "border-brand-blue bg-ink-card shadow-glow"
+                      : "border-ink-border bg-ink-card hover:border-zinc-600"
                 }`}
               >
-                {/* Auswahl-Indikator (Radio-Styling) */}
+                {/* Auswahl-Indikator (Radio-Styling) – bei Nicht-Verfügbarkeit ausgeblendet */}
                 <span
                   className={`absolute right-4 top-4 z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 transition-all ${
-                    isActive
-                      ? "border-brand-blue bg-brand-blue text-white"
-                      : "border-zinc-500 bg-ink/60 text-transparent"
+                    disabled
+                      ? "hidden"
+                      : isActive
+                        ? "border-brand-blue bg-brand-blue text-white"
+                        : "border-zinc-500 bg-ink/60 text-transparent"
                   }`}
                   aria-hidden="true"
                 >
@@ -67,12 +74,22 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                 {/* Bild-Platzhalter: später durch echtes Bild ersetzen.
                     Lege Bilder unter /public/cars/ ab und setze car.image. */}
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-zinc-800 to-ink">
+                  {/* Overlay bei Nicht-Verfügbarkeit */}
+                  {disabled && (
+                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-ink/70">
+                      <span className="rounded-full border border-zinc-500 bg-ink/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-200">
+                        Aktuell nicht verfügbar
+                      </span>
+                    </div>
+                  )}
                   {car.image ? (
                     <Image
                       src={car.image}
                       alt={car.name}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className={`object-cover transition-transform duration-500 ${
+                        disabled ? "grayscale" : "group-hover:scale-105"
+                      }`}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   ) : (
@@ -131,10 +148,18 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
 
                   <span
                     className={`mt-4 block text-sm font-semibold ${
-                      isActive ? "text-brand-sky" : "text-zinc-500"
+                      disabled
+                        ? "text-zinc-600"
+                        : isActive
+                          ? "text-brand-sky"
+                          : "text-zinc-500"
                     }`}
                   >
-                    {isActive ? "✓ Ausgewählt" : "Auswählen"}
+                    {disabled
+                      ? "Nicht verfügbar"
+                      : isActive
+                        ? "✓ Ausgewählt"
+                        : "Auswählen"}
                   </span>
                 </div>
               </button>

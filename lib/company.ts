@@ -64,6 +64,8 @@ export interface Car {
   image: string | null;
   prices: CarPrices;
   specs: string[];
+  // Verfügbarkeit: true = buchbar, false = aktuell nicht verfügbar.
+  available: boolean;
 }
 
 // Formatiert einen Betrag im Schweizer Stil, z.B. 1500 -> "CHF 1’500.–"
@@ -80,6 +82,7 @@ export const cars: Car[] = [
     image: "/cars/lamborghini.jpg",
     prices: { day: 40, week: 150, month: 500 },
     specs: ["Supersportwagen", "2 Sitze", "V12"],
+    available: true,
   },
   {
     id: "car-2",
@@ -87,6 +90,7 @@ export const cars: Car[] = [
     image: "/cars/mercedes-a-klasse.jpg",
     prices: { day: 40, week: 150, month: 500 },
     specs: ["Kompaktklasse", "5 Sitze", "Automatik"],
+    available: true,
   },
   {
     id: "car-3",
@@ -94,6 +98,7 @@ export const cars: Car[] = [
     image: "/cars/opel.jpg",
     prices: { day: 40, week: 150, month: 500 },
     specs: ["Kompaktklasse", "5 Sitze", "Klimaanlage"],
+    available: true,
   },
   {
     id: "car-4",
@@ -101,6 +106,7 @@ export const cars: Car[] = [
     image: "/cars/smart.jpg",
     prices: { day: 50, week: 220, month: 800 },
     specs: ["Stadtflitzer", "2 Sitze", "Wendig"],
+    available: true,
   },
   {
     id: "car-5",
@@ -108,5 +114,6 @@ export const cars: Car[] = [
     image: "/cars/opel-kadett.jpg",
     prices: { day: 40, week: 150, month: 500 },
     specs: ["Oldtimer", "Klassiker", "Benzin"],
+    available: true,
   },
 ];

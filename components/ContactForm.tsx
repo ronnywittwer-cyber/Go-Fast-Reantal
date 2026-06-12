@@ -214,8 +214,9 @@ export default function ContactForm({
             Bitte Fahrzeug wählen …
           </option>
           {cars.map((car) => (
-            <option key={car.id} value={car.id}>
+            <option key={car.id} value={car.id} disabled={!car.available}>
               {car.name}
+              {car.available ? "" : " – nicht verfügbar"}
             </option>
           ))}
         </select>
