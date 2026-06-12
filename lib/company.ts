@@ -61,41 +61,43 @@ export interface Car {
   specs: string[];
 }
 
-// 5 Platzhalter-Fahrzeuge. Bilder, Preise und Specs später einfach ersetzen.
+// Die 5 Fahrzeuge. Bilder liegen unter /public/cars/.
+// Preise sind noch Platzhalter ("CHF XX.– / Tag") – einfach hier eintragen.
+// Specs bei Bedarf anpassen.
 export const cars: Car[] = [
   {
     id: "car-1",
-    name: "Fahrzeug 1",
-    image: null,
+    name: "Lamborghini Aventador SVJ",
+    image: "/cars/lamborghini.jpg",
     pricePerDay: "CHF XX.– / Tag",
-    specs: ["Platzhalter", "Sitze: –", "Getriebe: –"],
+    specs: ["Supersportwagen", "2 Sitze", "V12"],
   },
   {
     id: "car-2",
-    name: "Fahrzeug 2",
-    image: null,
+    name: "Mercedes A-Klasse",
+    image: "/cars/mercedes-a-klasse.jpg",
     pricePerDay: "CHF XX.– / Tag",
-    specs: ["Platzhalter", "Sitze: –", "Getriebe: –"],
+    specs: ["Kompaktklasse", "5 Sitze", "Automatik"],
   },
   {
     id: "car-3",
-    name: "Fahrzeug 3",
-    image: null,
+    name: "Opel Astra",
+    image: "/cars/opel.jpg",
     pricePerDay: "CHF XX.– / Tag",
-    specs: ["Platzhalter", "Sitze: –", "Getriebe: –"],
+    specs: ["Kompaktklasse", "5 Sitze", "Klimaanlage"],
   },
   {
     id: "car-4",
-    name: "Fahrzeug 4",
-    image: null,
+    name: "Smart Fortwo",
+    image: "/cars/smart.jpg",
     pricePerDay: "CHF XX.– / Tag",
-    specs: ["Platzhalter", "Sitze: –", "Getriebe: –"],
+    specs: ["Stadtflitzer", "2 Sitze", "Wendig"],
   },
   {
     id: "car-5",
-    name: "Fahrzeug 5",
-    image: null,
+    name: "Opel Kadett – Oldtimer",
+    image: "/cars/opel-kadett.jpg",
     pricePerDay: "CHF XX.– / Tag",
-    specs: ["Platzhalter", "Sitze: –", "Getriebe: –"],
+    specs: ["Oldtimer", "Klassiker", "Benzin"],
   },
 ];
