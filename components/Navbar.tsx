@@ -13,11 +13,11 @@ export default function Navbar() {
           <a href="#fahrzeuge" className="transition-colors hover:text-white">
             Fahrzeuge
           </a>
-          <a href="#konditionen" className="transition-colors hover:text-white">
-            Konditionen
-          </a>
           <a href="#buchung" className="transition-colors hover:text-white">
             Buchung
+          </a>
+          <a href="#konditionen" className="transition-colors hover:text-white">
+            Konditionen
           </a>
           <a href="#kontakt" className="transition-colors hover:text-white">
             Kontakt
