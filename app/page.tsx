@@ -9,9 +9,9 @@ export default function Home() {
     <main className="min-h-screen">
       <Navbar />
       <Hero />
-      {/* Fahrzeugauswahl + Buchungsformular teilen sich den State */}
-      <BookingSection />
-      <Conditions />
+      {/* Fahrzeugauswahl + Buchungsformular teilen sich den State;
+          die Konditionen liegen dazwischen (über dem Formular). */}
+      <BookingSection between={<Conditions />} />
       <Footer />
     </main>
   );

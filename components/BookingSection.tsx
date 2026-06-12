@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import type { CarId } from "@/lib/company";
 import CarSelection from "./CarSelection";
 import ContactForm from "./ContactForm";
@@ -9,8 +9,11 @@ import ContactForm from "./ContactForm";
  * Klammert Fahrzeugauswahl und Buchungsformular zusammen und teilt den
  * "selectedCar"-State, damit die Auswahl oben automatisch ins Formular
  * übernommen wird (und umgekehrt über das Dropdown).
+ *
+ * Über die Prop `between` lässt sich ein Abschnitt (z.B. die Konditionen)
+ * zwischen Fahrzeugauswahl und Formular einfügen.
  */
-export default function BookingSection() {
+export default function BookingSection({ between }: { between?: ReactNode }) {
   const [selectedCar, setSelectedCar] = useState<CarId | null>(null);
 
   function handleSelect(id: CarId) {
@@ -20,6 +23,8 @@ export default function BookingSection() {
   return (
     <>
       <CarSelection selected={selectedCar} onSelect={handleSelect} />
+
+      {between}
 
       <section id="buchung" className="border-t border-ink-border/60 bg-ink-soft">
         <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
