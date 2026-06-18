@@ -38,7 +38,7 @@ export function Logo({ className = "h-9 w-auto" }: { className?: string }) {
     <span className="inline-flex items-center rounded-lg bg-white px-2.5 py-1.5 shadow-sm">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/logo-go-fast.png"
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/logo-go-fast.png`}
         alt="Go Fast Rental"
         className={className}
         onError={() => setFailed(true)}
