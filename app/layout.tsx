@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { kmPolicy } from "@/lib/company";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -7,8 +8,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Go Fast Rental – Autovermietung in Spiez",
-  description:
-    "Go Fast Rental – Ihre Autovermietung in Spiez. Unbegrenzte Kilometer, voll versicherte Fahrzeuge, Fahrten im In- und Ausland. Täglich 09:00–22:00 Uhr geöffnet.",
+  description: `Go Fast Rental – Ihre Autovermietung in Spiez. ${kmPolicy.includedPerMonth} km/Monat inklusive, voll versicherte Fahrzeuge, Fahrten im In- und Ausland. Täglich 09:00–22:00 Uhr geöffnet.`,
   keywords: [
     "Autovermietung",
     "Mietwagen",
@@ -19,8 +19,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "Go Fast Rental – Autovermietung in Spiez",
-    description:
-      "Unbegrenzte Kilometer, voll versichert, In- und Ausland erlaubt. Jetzt Fahrzeug auswählen und anfragen.",
+    description: `${kmPolicy.includedPerMonth} km/Monat inklusive, voll versichert, In- und Ausland erlaubt. Jetzt Fahrzeug auswählen und anfragen.`,
     locale: "de_CH",
     type: "website",
   },

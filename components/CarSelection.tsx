@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { cars, formatChf, type CarId } from "@/lib/company";
+import { cars, formatChf, kmPolicy, type CarId } from "@/lib/company";
 
 interface CarSelectionProps {
   selected: CarId | null;
@@ -145,6 +145,11 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                       </div>
                     </div>
                   </div>
+
+                  <p className="mt-2 text-[11px] leading-tight text-zinc-500">
+                    {kmPolicy.includedPerMonth} km/Monat inklusive, danach{" "}
+                    {kmPolicy.extraChfPerKm.toFixed(2)} CHF/km.
+                  </p>
 
                   <span
                     className={`mt-4 block text-sm font-semibold ${
