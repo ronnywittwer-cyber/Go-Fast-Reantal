@@ -29,7 +29,7 @@ export default function Footer() {
                 <span>
                   {company.address.street}
                   <br />
-                  {company.address.city}
+                  {company.address.zip} {company.address.city}
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -56,7 +56,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#buchung"
+                  href="/#buchung"
                   className="mt-2 inline-block rounded-full bg-brand-blue px-5 py-2 text-sm font-bold text-white transition-transform hover:scale-105"
                 >
                   Fahrzeug anfragen
@@ -70,7 +70,14 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {company.name}. Alle Rechte vorbehalten.
           </p>
-          <p>{company.founder} · {company.address.city}</p>
+          <nav className="flex gap-5">
+            <a href="/impressum" className="transition-colors hover:text-brand-sky">
+              Impressum
+            </a>
+            <a href="/datenschutz" className="transition-colors hover:text-brand-sky">
+              Datenschutz
+            </a>
+          </nav>
         </div>
       </div>
     </footer>

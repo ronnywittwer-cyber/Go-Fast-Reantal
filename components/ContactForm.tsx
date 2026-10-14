@@ -351,7 +351,16 @@ export default function ContactForm({
 
       <p className="mt-3 text-center text-xs text-zinc-500">
         Mit dem Absenden bestätigen Sie, dass Ihre Angaben korrekt sind. Die
-        Kaution von 1’000.– CHF wird bei Abholung hinterlegt.
+        Kaution von 1’000.– CHF wird bei Abholung hinterlegt. Wie wir Ihre
+        Daten bearbeiten, steht in der{" "}
+        <a
+          href="/datenschutz"
+          target="_blank"
+          className="text-brand-sky underline-offset-2 hover:underline"
+        >
+          Datenschutzerklärung
+        </a>
+        .
       </p>
     </form>
   );

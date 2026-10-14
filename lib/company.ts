@@ -7,8 +7,17 @@ export const company = {
   foundedYear: 2025,
   address: {
     street: "Thun Strasse 23",
+    zip: "3700",
     city: "Spiez",
+    country: "Schweiz",
   },
+  // TODO: Für Impressum & Datenschutz ergänzen. Leere Felder werden auf der
+  // Webseite ausgeblendet – die E-Mail-Adresse ist im Impressum aber Pflicht.
+  email: "",
+  // z.B. "Einzelunternehmen" oder "GmbH"
+  legalForm: "",
+  // UID (CHE-xxx.xxx.xxx), nur falls im Handelsregister eingetragen
+  uid: "",
   openingHours: "Täglich 09:00 – 22:00 Uhr",
   phone: "079 221 38 24",
   // Telefonnummer in internationalem Format für tel:-Links

@@ -12,6 +12,7 @@ Gebaut mit **Next.js (App Router)**, **TypeScript** und **Tailwind CSS**.
 - 🆔 Verpflichtender Ausweis-/Führerschein-Upload
 - 🔗 Auswahl oben wird automatisch ins Formular übernommen
 - ✉️ Buchungsanfragen per E-Mail (Resend) inkl. Ausweis als Anhang
+- ⚖️ Impressum & Datenschutzerklärung (Schweizer DSG)
 
 ## Entwicklung
 
@@ -34,6 +35,8 @@ app/
   layout.tsx          # Root-Layout & Metadaten
   page.tsx            # Hauptseite (setzt die Komponenten zusammen)
   api/booking/route.ts # Versand der Buchungsanfragen per E-Mail
+  impressum/page.tsx  # Impressum
+  datenschutz/page.tsx # Datenschutzerklärung
   globals.css         # Tailwind & globale Styles
 components/
   Navbar.tsx          # Sticky-Navigation
@@ -76,3 +79,11 @@ Einrichtung:
 3. Für den Live-Betrieb die eigene Domain bei Resend verifizieren und
    `BOOKING_FROM_EMAIL` auf eine Adresse dieser Domain setzen. Ohne eigene
    Domain kann Resend nur an die E-Mail-Adresse des Resend-Accounts senden.
+
+### Impressum & Datenschutz
+Die Seiten `/impressum` und `/datenschutz` holen Adresse, Telefon usw. aus
+`lib/company.ts`. Dort noch **E-Mail-Adresse** (Pflicht im Impressum),
+**Rechtsform** und ggf. **UID** eintragen. Die Datenschutzerklärung nennt
+Vercel (Hosting) und Resend (E-Mail) als Dienstleister – bei einem anderen
+Anbieter bitte den Abschnitt in `app/datenschutz/page.tsx` anpassen.
+Die Texte sind eine sorgfältige Vorlage, ersetzen aber keine Rechtsberatung.
