@@ -1,4 +1,4 @@
-import { company } from "@/lib/company";
+import { company, kmIncluded } from "@/lib/company";
 import { Logo } from "./Logo";
 
 export default function Footer() {
@@ -10,8 +10,8 @@ export default function Footer() {
           <div>
             <Logo className="h-10 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-zinc-400">
-              Ihre persönliche Autovermietung in {company.address.city}.
-              Unbegrenzte Kilometer, voll versichert, In- und Ausland erlaubt.
+              Ihre persönliche Autovermietung in {company.address.city}.{" "}
+              {kmIncluded}, voll versichert, In- und Ausland erlaubt.
             </p>
             <p className="mt-4 text-xs text-zinc-600">
               Gegründet {company.foundedYear} von {company.founder}.

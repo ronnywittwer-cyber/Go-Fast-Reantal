@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { company } from "@/lib/company";
+import { company, kmPerMonth } from "@/lib/company";
 
 // Vorschaubild, wenn der Link geteilt wird (WhatsApp, Facebook, iMessage …).
 // Wird beim Build einmal erzeugt.
@@ -91,9 +91,9 @@ export default async function OpengraphImage() {
               color: "#ffffff",
             }}
           >
-            <span>Kein Limit.</span>
-            <span style={{ color: "#5fa8ff" }}>Unbegrenzte</span>
-            <span style={{ color: "#5fa8ff" }}>Kilometer.</span>
+            <span>Faire Preise.</span>
+            <span style={{ color: "#5fa8ff" }}>{kmPerMonth}</span>
+            <span style={{ color: "#5fa8ff" }}>inklusive.</span>
           </div>
 
           <div

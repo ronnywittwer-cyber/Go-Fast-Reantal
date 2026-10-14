@@ -24,12 +24,23 @@ export const company = {
   phoneHref: "tel:+41762213824",
 } as const;
 
+// Kilometer-Regelung: inklusive Kontingent pro Monat, danach Verrechnung pro km.
+export const kmPolicy = {
+  includedPerMonth: 2000,
+  extraChfPerKm: 0.5,
+} as const;
+
+// Fertige Texte, z.B. "2’000 km/Monat", "2’000 km/Monat inklusive", "CHF 0.50"
+export const kmPerMonth = `${kmPolicy.includedPerMonth.toLocaleString("de-CH")} km/Monat`;
+export const kmIncluded = `${kmPerMonth} inklusive`;
+export const kmExtraPrice = `CHF ${kmPolicy.extraChfPerKm.toFixed(2)}`;
+
 // Mietbedingungen & Konditionen
 export const conditions = [
   {
-    icon: "infinity",
-    title: "Unbegrenzte Kilometer",
-    text: "Alle Mieten beinhalten unbegrenzte Kilometer – ohne versteckte Zusatzkosten.",
+    icon: "gauge",
+    title: kmIncluded,
+    text: `Jede Miete beinhaltet ${kmPerMonth}. Mehrkilometer werden mit ${kmExtraPrice} pro km verrechnet.`,
   },
   {
     icon: "globe",

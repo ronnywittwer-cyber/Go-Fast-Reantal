@@ -1,3 +1,5 @@
+import { kmIncluded } from "./company";
+
 // Öffentliche Adresse der Webseite – wird für Google, Sitemap und
 // Vorschaubilder (WhatsApp, Facebook …) gebraucht.
 // Sobald die eigene Domain steht, auf Vercel die Umgebungsvariable
@@ -15,4 +17,4 @@ export const siteUrl = resolveSiteUrl();
 
 export const siteTitle = "Go Fast Rental – Autovermietung in Spiez";
 export const siteDescription =
-  "Auto mieten in Spiez bei Thun: unbegrenzte Kilometer, voll versichert, Fahrten im In- und Ausland erlaubt. Täglich 09:00–22:00 Uhr.";
+  `Auto mieten in Spiez bei Thun: ${kmIncluded}, voll versichert, Fahrten im In- und Ausland erlaubt. Täglich 09:00–22:00 Uhr.`;
