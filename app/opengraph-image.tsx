@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { company, kmPerMonth } from "@/lib/company";
+import { cars, company, kmPerMonth } from "@/lib/company";
 
 // Vorschaubild, wenn der Link geteilt wird (WhatsApp, Facebook, iMessage …).
 // Wird beim Build einmal erzeugt.
@@ -15,9 +15,12 @@ async function dataUrl(file: string, mime: string) {
 }
 
 export default async function OpengraphImage() {
-  const [car, logo] = await Promise.all([
-    dataUrl("cars/lamborghini.jpg", "image/jpeg"),
+  // Hauptbild (Front) jedes Fahrzeugs, max. 3
+  const [logo, ...carImages] = await Promise.all([
     dataUrl("logo-go-fast.png", "image/png"),
+    ...cars
+      .slice(0, 3)
+      .map((c) => dataUrl(c.images[0].src.replace(/^\//, ""), "image/jpeg")),
   ]);
 
   return new ImageResponse(
@@ -31,32 +34,35 @@ export default async function OpengraphImage() {
           backgroundColor: "#0a1020",
         }}
       >
-        {/* Fahrzeugbild rechts, nach links ins Navy auslaufend */}
-        <img
-          src={car}
-          width={780}
-          height={630}
-          style={{
-            position: "absolute",
-            right: 0,
-            top: 0,
-            width: 780,
-            height: 630,
-            objectFit: "cover",
-          }}
-        />
+        {/* Fahrzeugkarten rechts, leicht versetzt */}
         <div
           style={{
             position: "absolute",
-            left: 0,
+            right: 36,
             top: 0,
-            width: 1200,
             height: 630,
             display: "flex",
-            background:
-              "linear-gradient(90deg, #0a1020 0%, #0a1020 36%, rgba(10,16,32,0.85) 52%, rgba(10,16,32,0) 78%)",
+            alignItems: "center",
+            gap: 14,
           }}
-        />
+        >
+          {carImages.map((src, i) => (
+            <img
+              key={i}
+              src={src}
+              width={156}
+              height={208}
+              style={{
+                width: 156,
+                height: 208,
+                objectFit: "cover",
+                borderRadius: 18,
+                border: "3px solid #243152",
+                marginTop: i === 1 ? -60 : 60,
+              }}
+            />
+          ))}
+        </div>
 
         <div
           style={{
@@ -65,7 +71,7 @@ export default async function OpengraphImage() {
             flexDirection: "column",
             justifyContent: "center",
             padding: "0 70px",
-            width: 780,
+            width: 640,
           }}
         >
           <div
@@ -99,10 +105,10 @@ export default async function OpengraphImage() {
           <div
             style={{
               display: "flex",
-              gap: 12,
+              gap: 10,
               alignItems: "flex-start",
               marginTop: 34,
-              fontSize: 24,
+              fontSize: 20,
               color: "#e4e4e7",
             }}
           >
@@ -115,7 +121,7 @@ export default async function OpengraphImage() {
                     border: "2px solid #243152",
                     backgroundColor: "#121b33",
                     borderRadius: 999,
-                    padding: "8px 20px",
+                    padding: "7px 16px",
                     lineHeight: 1.2,
                     flexShrink: 0,
                     whiteSpace: "nowrap",

@@ -79,7 +79,7 @@ export const conditions = [
 // Max. Grösse für den Ausweis-Upload. Vercel erlaubt ~4.5 MB pro Request.
 export const maxUploadBytes = 4 * 1024 * 1024;
 
-export type CarId = "car-1" | "car-2" | "car-3" | "car-4" | "car-5";
+export type CarId = "dacia-sandero" | "smart-forfour" | "opel-astra";
 
 export interface CarPrices {
   day: number; // CHF pro Tag
@@ -87,11 +87,17 @@ export interface CarPrices {
   month: number; // CHF pro Monat
 }
 
+export interface CarImage {
+  src: string;
+  alt: string;
+}
+
 export interface Car {
   id: CarId;
   name: string;
-  // Bilder liegen unter /public/cars/.
-  image: string | null;
+  // Bilder liegen unter /public/cars/ (Hochformat 3:4, 600 × 800 px).
+  // Das erste Bild ist das Hauptbild der Karte.
+  images: CarImage[];
   prices: CarPrices;
   specs: string[];
   // Verfügbarkeit: true = buchbar, false = aktuell nicht verfügbar.
@@ -103,47 +109,61 @@ export function formatChf(amount: number): string {
   return "CHF " + amount.toLocaleString("de-CH") + ".–";
 }
 
-// Die 5 Fahrzeuge. Bilder liegen unter /public/cars/.
-// Preise (Tag / Woche / Monat) und Specs bei Bedarf hier anpassen.
+// Hilfsfunktion für die Bildergalerie: /cars/<prefix>-1.jpg, -2.jpg, …
+function gallery(prefix: string, name: string, views: string[]): CarImage[] {
+  return views.map((view, i) => ({
+    src: `/cars/${prefix}-${i + 1}.jpg`,
+    alt: `${name} – ${view}`,
+  }));
+}
+
+// Die Fahrzeuge. Preise (Tag / Woche / Monat) und Specs hier anpassen.
 export const cars: Car[] = [
   {
-    id: "car-1",
-    name: "Lamborghini Aventador SVJ",
-    image: "/cars/lamborghini.jpg",
+    id: "dacia-sandero",
+    name: "Dacia Sandero Stepway",
+    images: gallery("dacia", "Dacia Sandero Stepway", [
+      "Front",
+      "Seitlich vorne",
+      "Seitenansicht",
+      "Seitlich hinten",
+      "Heck",
+      "Kofferraum",
+      "Innenraum",
+    ]),
     prices: { day: 40, week: 150, month: 500 },
-    specs: ["Supersportwagen", "2 Sitze", "V12"],
+    specs: ["Crossover", "5 Sitze", "Touchscreen"],
     available: true,
   },
   {
-    id: "car-2",
-    name: "Mercedes A-Klasse",
-    image: "/cars/mercedes-a-klasse.jpg",
-    prices: { day: 40, week: 150, month: 500 },
-    specs: ["Kompaktklasse", "5 Sitze", "Automatik"],
-    available: true,
-  },
-  {
-    id: "car-3",
-    name: "Opel Astra",
-    image: "/cars/opel.jpg",
-    prices: { day: 40, week: 150, month: 500 },
-    specs: ["Kompaktklasse", "5 Sitze", "Klimaanlage"],
-    available: true,
-  },
-  {
-    id: "car-4",
-    name: "Smart Fortwo",
-    image: "/cars/smart.jpg",
+    id: "smart-forfour",
+    name: "Smart forfour",
+    images: gallery("smart", "Smart forfour", [
+      "Front",
+      "Seitlich vorne",
+      "Seitenansicht",
+      "Seitlich hinten",
+      "Heck",
+      "Cockpit",
+      "Innenraum",
+    ]),
     prices: { day: 50, week: 220, month: 800 },
-    specs: ["Stadtflitzer", "2 Sitze", "Wendig"],
+    specs: ["Stadtflitzer", "4 Sitze", "Automatik"],
     available: true,
   },
   {
-    id: "car-5",
-    name: "Opel Kadett – Oldtimer",
-    image: "/cars/opel-kadett.jpg",
+    id: "opel-astra",
+    name: "Opel Astra Caravan",
+    images: gallery("opel", "Opel Astra Caravan", [
+      "Front",
+      "Seitlich hinten",
+      "Heck",
+      "Kofferraum",
+      "Innenraum",
+      "Cockpit",
+    ]),
     prices: { day: 40, week: 150, month: 500 },
-    specs: ["Oldtimer", "Klassiker", "Benzin"],
+    specs: ["Kombi", "5 Sitze", "Automatik"],
     available: true,
   },
 ];

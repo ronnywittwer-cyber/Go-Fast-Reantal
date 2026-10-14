@@ -7,7 +7,7 @@ Gebaut mit **Next.js (App Router)**, **TypeScript** und **Tailwind CSS**.
 
 - 🏎️ Sportliches, edles Dark-Design mit roten & neongelben Akzenten
 - 📱 Voll responsive (Mobile, Tablet, Desktop)
-- 🚗 Fahrzeugauswahl mit 5 Karten und Radio-Styling
+- 🚗 Fahrzeugauswahl mit Bildergalerie pro Auto (Hochformat, wischen / blättern)
 - 📝 Buchungs-/Kontaktformular mit Validierung
 - 🆔 Verpflichtender Ausweis-/Führerschein-Upload
 - 🔗 Auswahl oben wird automatisch ins Formular übernommen
@@ -46,6 +46,7 @@ components/
   Conditions.tsx      # Mietbedingungen & Konditionen
   BookingSection.tsx  # Klammert Auswahl + Formular (shared state)
   CarSelection.tsx    # Fahrzeug-Karten zur Auswahl
+  CarGallery.tsx      # Bildergalerie pro Fahrzeug (Hochformat)
   ContactForm.tsx     # Buchungsformular inkl. Validierung
   Footer.tsx          # Kontakt, Öffnungszeiten, Standort
 lib/
@@ -61,9 +62,8 @@ Alle Stammdaten (Adresse, Telefon, Öffnungszeiten …) findest du zentral in
 [`lib/company.ts`](./lib/company.ts).
 
 ### Fahrzeuge (Bilder & Preise)
-Die 5 Fahrzeuge sind aktuell Platzhalter. In `lib/company.ts` kannst du pro
-Fahrzeug Name, Preis, Specs und Bildpfad setzen. Bilder gehören nach
-`public/cars/` (siehe [public/cars/README.md](./public/cars/README.md)).
+Die Fahrzeuge (Name, Preise, Specs, Galerie) stehen in `lib/company.ts`.
+Bilder gehören nach `public/cars/` (siehe [public/cars/README.md](./public/cars/README.md)).
 
 ### Formular-Versand (E-Mail)
 Buchungsanfragen werden über die API-Route
