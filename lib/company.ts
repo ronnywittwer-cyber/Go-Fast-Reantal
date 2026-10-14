@@ -19,9 +19,9 @@ export const company = {
   // UID (CHE-xxx.xxx.xxx), nur falls im Handelsregister eingetragen
   uid: "",
   openingHours: "Täglich 09:00 – 22:00 Uhr",
-  phone: "079 221 38 24",
+  phone: "076 221 38 24",
   // Telefonnummer in internationalem Format für tel:-Links
-  phoneHref: "tel:+41792213824",
+  phoneHref: "tel:+41762213824",
 } as const;
 
 // Mietbedingungen & Konditionen
