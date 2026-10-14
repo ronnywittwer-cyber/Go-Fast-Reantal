@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { cars, type CarId } from "@/lib/company";
+import { cars, maxUploadBytes, type CarId } from "@/lib/company";
 
 interface ContactFormProps {
   selectedCar: CarId | null;
@@ -31,6 +31,8 @@ export default function ContactForm({
   const [errors, setErrors] = useState<FormErrors>({});
   const [idFileName, setIdFileName] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function validate(formData: FormData): FormErrors {
@@ -67,30 +69,59 @@ export default function ContactForm({
     if (!idFile || idFile.size === 0) {
       next.idDocument =
         "Bitte laden Sie eine Kopie Ihres Ausweises/Führerscheins hoch.";
+    } else if (idFile.size > maxUploadBytes) {
+      next.idDocument = "Die Datei ist zu gross (max. 4 MB).";
     }
 
     return next;
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (sending) return;
     const form = e.currentTarget;
     const formData = new FormData(form);
     const validation = validate(formData);
     setErrors(validation);
+    setSendError("");
 
-    if (Object.keys(validation).length === 0) {
-      // TODO: Hier die Daten an einen Backend-Endpunkt / API-Route senden
-      // (z.B. /app/api/booking/route.ts) oder per E-Mail-Service verschicken.
-      // Aktuell wird die Anfrage clientseitig validiert und bestätigt.
-      setSubmitted(true);
-      form.reset();
-      setIdFileName("");
-    } else {
+    if (Object.keys(validation).length > 0) {
       // Zum ersten Fehlerfeld scrollen
       document
         .querySelector("[data-error='true']")
         ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    // Anfrage an die API-Route senden (app/api/booking/route.ts)
+    setSending(true);
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        body: formData,
+      });
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+      } | null;
+
+      if (!res.ok || !data?.ok) {
+        setSendError(
+          data?.error ??
+            "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+        );
+        return;
+      }
+
+      setSubmitted(true);
+      form.reset();
+      setIdFileName("");
+    } catch {
+      setSendError(
+        "Keine Verbindung. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+      );
+    } finally {
+      setSending(false);
     }
   }
 
@@ -277,7 +308,7 @@ export default function ContactForm({
               {idFileName || "Datei auswählen oder hierher ziehen"}
             </span>
             <span className="block text-xs text-zinc-500">
-              JPG, PNG oder PDF
+              JPG, PNG oder PDF – max. 4 MB
             </span>
           </span>
         </label>
@@ -301,11 +332,21 @@ export default function ContactForm({
         {errors.idDocument && <p className={errorText}>{errors.idDocument}</p>}
       </div>
 
+      {sendError && (
+        <p
+          role="alert"
+          className="mt-6 rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-300"
+        >
+          {sendError}
+        </p>
+      )}
+
       <button
         type="submit"
-        className="mt-7 w-full rounded-full bg-brand-blue px-6 py-4 text-base font-bold text-white shadow-glow transition-transform hover:scale-[1.02] active:scale-100"
+        disabled={sending}
+        className="mt-7 w-full rounded-full bg-brand-blue px-6 py-4 text-base font-bold text-white shadow-glow transition-transform hover:scale-[1.02] active:scale-100 disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
       >
-        Buchungsanfrage senden
+        {sending ? "Wird gesendet …" : "Buchungsanfrage senden"}
       </button>
 
       <p className="mt-3 text-center text-xs text-zinc-500">

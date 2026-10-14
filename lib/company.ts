@@ -49,6 +49,9 @@ export const conditions = [
   },
 ] as const;
 
+// Max. Grösse für den Ausweis-Upload. Vercel erlaubt ~4.5 MB pro Request.
+export const maxUploadBytes = 4 * 1024 * 1024;
+
 export type CarId = "car-1" | "car-2" | "car-3" | "car-4" | "car-5";
 
 export interface CarPrices {

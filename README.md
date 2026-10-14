@@ -11,6 +11,7 @@ Gebaut mit **Next.js (App Router)**, **TypeScript** und **Tailwind CSS**.
 - 📝 Buchungs-/Kontaktformular mit Validierung
 - 🆔 Verpflichtender Ausweis-/Führerschein-Upload
 - 🔗 Auswahl oben wird automatisch ins Formular übernommen
+- ✉️ Buchungsanfragen per E-Mail (Resend) inkl. Ausweis als Anhang
 
 ## Entwicklung
 
@@ -32,6 +33,7 @@ npm run start   # Produktions-Server
 app/
   layout.tsx          # Root-Layout & Metadaten
   page.tsx            # Hauptseite (setzt die Komponenten zusammen)
+  api/booking/route.ts # Versand der Buchungsanfragen per E-Mail
   globals.css         # Tailwind & globale Styles
 components/
   Navbar.tsx          # Sticky-Navigation
@@ -58,9 +60,19 @@ Die 5 Fahrzeuge sind aktuell Platzhalter. In `lib/company.ts` kannst du pro
 Fahrzeug Name, Preis, Specs und Bildpfad setzen. Bilder gehören nach
 `public/cars/` (siehe [public/cars/README.md](./public/cars/README.md)).
 
-### Formular-Versand anbinden
-Das Formular validiert aktuell clientseitig und zeigt eine Bestätigung an. Um
-Anfragen tatsächlich zu empfangen, lege eine API-Route an (z.B.
-`app/api/booking/route.ts`) oder binde einen E-Mail-Service ein. Die Stelle ist
-in [`components/ContactForm.tsx`](./components/ContactForm.tsx) mit `// TODO`
-markiert.
+### Formular-Versand (E-Mail)
+Buchungsanfragen werden über die API-Route
+[`app/api/booking/route.ts`](./app/api/booking/route.ts) serverseitig geprüft
+und per [Resend](https://resend.com) als E-Mail verschickt – inklusive
+Ausweis/Führerschein als Anhang (max. 4 MB). Mit „Antworten“ schreibt man
+direkt dem Kunden.
+
+Einrichtung:
+
+1. Kostenlosen Account auf [resend.com](https://resend.com) erstellen und einen
+   API-Key anlegen.
+2. `.env.example` nach `.env.local` kopieren und die Werte eintragen
+   (auf Vercel: *Settings → Environment Variables*).
+3. Für den Live-Betrieb die eigene Domain bei Resend verifizieren und
+   `BOOKING_FROM_EMAIL` auf eine Adresse dieser Domain setzen. Ohne eigene
+   Domain kann Resend nur an die E-Mail-Adresse des Resend-Accounts senden.
