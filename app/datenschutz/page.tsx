@@ -8,7 +8,8 @@ import {
 } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerklärung – Go Fast Rental",
+  title: "Datenschutzerklärung",
+  alternates: { canonical: "/datenschutz" },
   robots: { index: false },
 };
 

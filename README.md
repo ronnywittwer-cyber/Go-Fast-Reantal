@@ -13,6 +13,7 @@ Gebaut mit **Next.js (App Router)**, **TypeScript** und **Tailwind CSS**.
 - 🔗 Auswahl oben wird automatisch ins Formular übernommen
 - ✉️ Buchungsanfragen per E-Mail (Resend) inkl. Ausweis als Anhang
 - ⚖️ Impressum & Datenschutzerklärung (Schweizer DSG)
+- 🔎 SEO: Metadaten, Sitemap, robots.txt, Google-Unternehmensdaten (JSON-LD), Favicon & Vorschaubild für geteilte Links
 
 ## Entwicklung
 
@@ -87,3 +88,11 @@ Die Seiten `/impressum` und `/datenschutz` holen Adresse, Telefon usw. aus
 Vercel (Hosting) und Resend (E-Mail) als Dienstleister – bei einem anderen
 Anbieter bitte den Abschnitt in `app/datenschutz/page.tsx` anpassen.
 Die Texte sind eine sorgfältige Vorlage, ersetzen aber keine Rechtsberatung.
+
+### SEO & Vorschaubild
+- `lib/site.ts`: Titel, Beschreibung und Webseiten-Adresse. Sobald die eigene
+  Domain steht, auf Vercel `NEXT_PUBLIC_SITE_URL` setzen (z.B.
+  `https://go-fast-rental.ch`).
+- `app/opengraph-image.tsx`: Vorschaubild für WhatsApp, Facebook usw.
+- `components/BusinessJsonLd.tsx`: Unternehmensdaten für Google.
+- `app/icon.png` / `app/apple-icon.png`: Favicon und Homescreen-Icon.

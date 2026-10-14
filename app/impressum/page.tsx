@@ -3,7 +3,8 @@ import { company } from "@/lib/company";
 import { LegalPage, LegalSection, legalLink } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Impressum – Go Fast Rental",
+  title: "Impressum",
+  alternates: { canonical: "/impressum" },
   robots: { index: false },
 };
 
