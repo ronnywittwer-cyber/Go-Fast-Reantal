@@ -22,7 +22,14 @@ export const company = {
   phone: "076 221 38 24",
   // Telefonnummer in internationalem Format für tel:-Links
   phoneHref: "tel:+41762213824",
+  // WhatsApp-Nummer international ohne "+" und Leerzeichen
+  whatsapp: "41762213824",
 } as const;
+
+// Link, der WhatsApp mit einer vorbereiteten Nachricht öffnet
+export const whatsappHref = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(
+  "Hallo Go Fast Rental, ich interessiere mich für ein Mietauto.",
+)}`;
 
 // Kilometer-Regelung: inklusive Kontingent pro Monat, danach Verrechnung pro km.
 export const kmPolicy = {

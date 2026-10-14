@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { siteDescription, siteTitle, siteUrl } from "@/lib/site";
 import { kmIncluded } from "@/lib/company";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const viewport: Viewport = {
   themeColor: "#0a1020",
@@ -43,7 +44,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="de-CH">
-      <body>{children}</body>
+      <body>
+        {children}
+        <WhatsAppButton />
+      </body>
     </html>
   );
 }

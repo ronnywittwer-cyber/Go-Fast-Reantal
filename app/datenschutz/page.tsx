@@ -91,11 +91,18 @@ export default function DatenschutzPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="4. Kontakt per Telefon oder E-Mail">
+      <LegalSection title="4. Kontakt per Telefon, E-Mail oder WhatsApp">
         <p>
-          Wenn Sie uns telefonisch oder per E-Mail kontaktieren, bearbeiten
-          wir die von Ihnen mitgeteilten Daten, um Ihr Anliegen zu
+          Wenn Sie uns telefonisch, per E-Mail oder per WhatsApp kontaktieren,
+          bearbeiten wir die von Ihnen mitgeteilten Daten, um Ihr Anliegen zu
           beantworten.
+        </p>
+        <p>
+          Der WhatsApp-Button auf unserer Webseite ist ein einfacher Link: Erst
+          wenn Sie darauf klicken, wird WhatsApp geöffnet. Für die Nutzung von
+          WhatsApp gelten die Datenschutzbestimmungen von WhatsApp Ireland
+          Ltd. bzw. Meta Platforms, Inc. (USA). Wenn Sie dies nicht möchten,
+          erreichen Sie uns auch telefonisch.
         </p>
       </LegalSection>
 
