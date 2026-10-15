@@ -30,7 +30,7 @@ function Track({
   // die zweite Hälfte ist eine Kopie für den nahtlosen Übergang.
   const half = [...items, ...items];
   return (
-    <div className={`flex w-max ${animation} group-hover:[animation-play-state:paused]`}>
+    <div className={`flex w-max ${animation}`}>
       {[0, 1].map((copy) => (
         <ul
           key={copy}
@@ -60,7 +60,7 @@ function Track({
 export default function SpeedBand() {
   return (
     <div
-      className="group relative h-44 overflow-hidden sm:h-40"
+      className="relative h-44 overflow-hidden sm:h-40"
       role="region"
       aria-label="Unsere Vorteile"
     >
