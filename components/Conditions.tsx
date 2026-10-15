@@ -13,10 +13,12 @@ function ConditionIcon({ name }: { name: string }) {
   };
 
   switch (name) {
-    case "infinity":
+    case "gauge":
       return (
         <svg {...common}>
-          <path d="M6 8a4 4 0 1 0 0 8c2 0 3-1.5 6-4s4-4 6-4a4 4 0 1 1 0 8c-2 0-3-1.5-6-4S8 8 6 8Z" />
+          <path d="M4.9 18.5a9 9 0 1 1 14.2 0" />
+          <path d="m12 13 4-5" />
+          <circle cx="12" cy="13" r="1.4" />
         </svg>
       );
     case "globe":

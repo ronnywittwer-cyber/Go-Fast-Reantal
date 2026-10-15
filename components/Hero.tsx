@@ -1,4 +1,4 @@
-import { company } from "@/lib/company";
+import { company, kmExtraPrice, kmIncluded, kmPerMonth } from "@/lib/company";
 
 export default function Hero() {
   return (
@@ -11,15 +11,15 @@ export default function Hero() {
           </span>
 
           <h1 className="mt-6 text-4xl font-black leading-[1.05] tracking-tight text-white sm:text-6xl">
-            Kein Limit.{" "}
+            Faire Preise.{" "}
             <span className="bg-gradient-to-br from-brand-sky to-brand-blue bg-clip-text text-transparent">
-              Unbegrenzte Kilometer.
+              {kmIncluded}.
             </span>{" "}
             Volle Freiheit.
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg text-zinc-300">
-            Fahren Sie so weit Sie wollen – ohne Kilometer-Limit, voll versichert
+            {kmIncluded}, danach nur {kmExtraPrice} pro km – voll versichert
             und auch ins Ausland. Bei{" "}
             <span className="font-semibold text-white">Go Fast Rental</span>{" "}
             mieten Sie unkompliziert, persönlich und ohne versteckte Kosten.
@@ -28,7 +28,7 @@ export default function Hero() {
           {/* USP-Badges – schneller Vertrauensaufbau */}
           <ul className="mt-7 flex flex-wrap gap-2.5 text-sm">
             {[
-              "♾️  Unbegrenzte Kilometer",
+              `🚗  ${kmIncluded}`,
               "🌍  In- & Ausland erlaubt",
               "🛡️  Voll versichert",
             ].map((badge) => (
@@ -79,7 +79,7 @@ export default function Hero() {
                 Kilometer
               </dt>
               <dd className="mt-1 text-sm font-semibold text-white">
-                Unbegrenzt inkl.
+                {kmPerMonth} inkl.
               </dd>
             </div>
           </dl>

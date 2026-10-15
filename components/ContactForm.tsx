@@ -1,7 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { cars, type CarId } from "@/lib/company";
+import { useEffect, useRef, useState } from "react";
+import {
+  cars,
+  earliestBookingDate,
+  maxUploadBytes,
+  type CarId,
+} from "@/lib/company";
 
 interface ContactFormProps {
   selectedCar: CarId | null;
@@ -31,7 +36,18 @@ export default function ContactForm({
   const [errors, setErrors] = useState<FormErrors>({});
   const [idFileName, setIdFileName] = useState<string>("");
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Spam-Schutz: Zeitpunkt, ab dem das Formular sichtbar war (erst im Browser
+  // setzen, sonst stünde hier die Build-Zeit).
+  const [startedAt, setStartedAt] = useState(0);
+  useEffect(() => setStartedAt(Date.now()), []);
+  // Mietzeitraum: frühestes Datum erst im Browser bestimmen (sonst Build-Datum)
+  const [minDate, setMinDate] = useState("");
+  useEffect(() => setMinDate(earliestBookingDate()), []);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   function validate(formData: FormData): FormErrors {
     const next: FormErrors = {};
@@ -56,7 +72,11 @@ export default function ContactForm({
     if (!phone) next.phone = "Bitte Telefonnummer angeben.";
     if (!car) next.car = "Bitte ein Fahrzeug auswählen.";
 
-    if (!dateFrom) next.dateFrom = "Bitte Startdatum wählen.";
+    if (!dateFrom) {
+      next.dateFrom = "Bitte Startdatum wählen.";
+    } else if (dateFrom < earliestBookingDate()) {
+      next.dateFrom = "Der Mietbeginn darf nicht in der Vergangenheit liegen.";
+    }
     if (!dateTo) {
       next.dateTo = "Bitte Enddatum wählen.";
     } else if (dateFrom && dateTo < dateFrom) {
@@ -67,30 +87,62 @@ export default function ContactForm({
     if (!idFile || idFile.size === 0) {
       next.idDocument =
         "Bitte laden Sie eine Kopie Ihres Ausweises/Führerscheins hoch.";
+    } else if (idFile.size > maxUploadBytes) {
+      next.idDocument = "Die Datei ist zu gross (max. 4 MB).";
     }
 
     return next;
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (sending) return;
     const form = e.currentTarget;
     const formData = new FormData(form);
     const validation = validate(formData);
     setErrors(validation);
+    setSendError("");
 
-    if (Object.keys(validation).length === 0) {
-      // TODO: Hier die Daten an einen Backend-Endpunkt / API-Route senden
-      // (z.B. /app/api/booking/route.ts) oder per E-Mail-Service verschicken.
-      // Aktuell wird die Anfrage clientseitig validiert und bestätigt.
-      setSubmitted(true);
-      form.reset();
-      setIdFileName("");
-    } else {
+    if (Object.keys(validation).length > 0) {
       // Zum ersten Fehlerfeld scrollen
       document
         .querySelector("[data-error='true']")
         ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    // Anfrage an die API-Route senden (app/api/booking/route.ts)
+    setSending(true);
+    try {
+      const res = await fetch("/api/booking", {
+        method: "POST",
+        body: formData,
+      });
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+      } | null;
+
+      if (!res.ok || !data?.ok) {
+        setSendError(
+          data?.error ??
+            "Die Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+        );
+        return;
+      }
+
+      setSubmitted(true);
+      form.reset();
+      setIdFileName("");
+      setDateFrom("");
+      setDateTo("");
+      setStartedAt(Date.now());
+    } catch {
+      setSendError(
+        "Keine Verbindung. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+      );
+    } finally {
+      setSending(false);
     }
   }
 
@@ -134,6 +186,12 @@ export default function ContactForm({
       noValidate
       className="mx-auto max-w-2xl rounded-2xl border border-ink-border bg-ink-card p-6 sm:p-8"
     >
+      {/* Spam-Schutz: unsichtbar für Menschen (siehe app/api/booking/route.ts) */}
+      <input type="hidden" name="startedAt" value={startedAt} />
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor="website">Website (bitte leer lassen)</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       {/* Name */}
       <div className="grid gap-5 sm:grid-cols-2">
         <div data-error={Boolean(errors.firstName)}>
@@ -233,6 +291,14 @@ export default function ContactForm({
             id="dateFrom"
             name="dateFrom"
             type="date"
+            min={minDate || undefined}
+            value={dateFrom}
+            onChange={(e) => {
+              const value = e.target.value;
+              setDateFrom(value);
+              // Ende automatisch nachziehen, wenn es sonst vor dem Beginn läge
+              if (value && dateTo && dateTo < value) setDateTo(value);
+            }}
             className={inputBase}
           />
           {errors.dateFrom && <p className={errorText}>{errors.dateFrom}</p>}
@@ -241,7 +307,15 @@ export default function ContactForm({
           <label htmlFor="dateTo" className={labelBase}>
             Mietende (Bis)
           </label>
-          <input id="dateTo" name="dateTo" type="date" className={inputBase} />
+          <input
+            id="dateTo"
+            name="dateTo"
+            type="date"
+            min={dateFrom || minDate || undefined}
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+            className={inputBase}
+          />
           {errors.dateTo && <p className={errorText}>{errors.dateTo}</p>}
         </div>
       </div>
@@ -277,7 +351,7 @@ export default function ContactForm({
               {idFileName || "Datei auswählen oder hierher ziehen"}
             </span>
             <span className="block text-xs text-zinc-500">
-              JPG, PNG oder PDF
+              JPG, PNG oder PDF – max. 4 MB
             </span>
           </span>
         </label>
@@ -301,16 +375,35 @@ export default function ContactForm({
         {errors.idDocument && <p className={errorText}>{errors.idDocument}</p>}
       </div>
 
+      {sendError && (
+        <p
+          role="alert"
+          className="mt-6 rounded-xl border border-rose-500/40 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-300"
+        >
+          {sendError}
+        </p>
+      )}
+
       <button
         type="submit"
-        className="mt-7 w-full rounded-full bg-brand-blue px-6 py-4 text-base font-bold text-white shadow-glow transition-transform hover:scale-[1.02] active:scale-100"
+        disabled={sending}
+        className="mt-7 w-full rounded-full bg-brand-blue px-6 py-4 text-base font-bold text-white shadow-glow transition-transform hover:scale-[1.02] active:scale-100 disabled:cursor-wait disabled:opacity-70 disabled:hover:scale-100"
       >
-        Buchungsanfrage senden
+        {sending ? "Wird gesendet …" : "Buchungsanfrage senden"}
       </button>
 
       <p className="mt-3 text-center text-xs text-zinc-500">
         Mit dem Absenden bestätigen Sie, dass Ihre Angaben korrekt sind. Die
-        Kaution von 1’000.– CHF wird bei Abholung hinterlegt.
+        Kaution von 1’000.– CHF wird bei Abholung hinterlegt. Wie wir Ihre
+        Daten bearbeiten, steht in der{" "}
+        <a
+          href="/datenschutz"
+          target="_blank"
+          className="text-brand-sky underline-offset-2 hover:underline"
+        >
+          Datenschutzerklärung
+        </a>
+        .
       </p>
     </form>
   );

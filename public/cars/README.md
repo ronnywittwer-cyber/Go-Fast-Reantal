@@ -1,24 +1,19 @@
 # Fahrzeugbilder
 
-Lege hier deine echten Autobilder ab, z.B.:
+Pro Auto gibt es eine Bildergalerie, alle Bilder im **Hochformat 3:4
+(600 × 800 px)**:
 
-- `auto-1.jpg`
-- `auto-2.jpg`
-- `auto-3.jpg`
-- `auto-4.jpg`
-- `auto-5.jpg`
+- `dacia-1.jpg` … `dacia-7.jpg` – Dacia Sandero Stepway
+- `smart-1.jpg` … `smart-7.jpg` – Smart forfour
+- `opel-1.jpg` … `opel-6.jpg` – Opel Astra Caravan
 
-Trage den Pfad anschliessend in `lib/company.ts` beim jeweiligen Fahrzeug ein:
+Das Bild mit der Nummer 1 ist jeweils das Hauptbild auf der Karte.
+Welche Bilder zu welchem Auto gehören, steht in `lib/company.ts`
+(`images: gallery("dacia", …)`).
 
-```ts
-{
-  id: "car-1",
-  name: "Fahrzeug 1",
-  image: "/cars/auto-1.jpg", // <- hier eintragen (statt null)
-  pricePerDay: "CHF 89.– / Tag",
-  specs: ["Benzin", "Sitze: 5", "Automatik"],
-}
-```
+## Neue Bilder hinzufügen
 
-Empfohlenes Seitenverhältnis: **16:10** (z.B. 1280 × 800 px) für eine
-einheitliche Darstellung der Karten.
+Am einfachsten die Originalfotos hochladen und Claude bitten, sie
+zuzuschneiden. Von Hand: Bild auf 3:4 zuschneiden, auf 600 × 800 px
+verkleinern, als `<auto>-<nummer>.jpg` hier ablegen und in
+`lib/company.ts` bei der Galerie eine Beschreibung ergänzen.

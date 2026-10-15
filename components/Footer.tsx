@@ -1,4 +1,4 @@
-import { company } from "@/lib/company";
+import { company, kmIncluded } from "@/lib/company";
 import { Logo } from "./Logo";
 
 export default function Footer() {
@@ -10,8 +10,8 @@ export default function Footer() {
           <div>
             <Logo className="h-10 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-zinc-400">
-              Ihre persönliche Autovermietung in {company.address.city}.
-              Unbegrenzte Kilometer, voll versichert, In- und Ausland erlaubt.
+              Ihre persönliche Autovermietung in {company.address.city}.{" "}
+              {kmIncluded}, voll versichert, In- und Ausland erlaubt.
             </p>
             <p className="mt-4 text-xs text-zinc-600">
               Gegründet {company.foundedYear} von {company.founder}.
@@ -29,7 +29,7 @@ export default function Footer() {
                 <span>
                   {company.address.street}
                   <br />
-                  {company.address.city}
+                  {company.address.zip} {company.address.city}
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -56,7 +56,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#buchung"
+                  href="/#buchung"
                   className="mt-2 inline-block rounded-full bg-brand-blue px-5 py-2 text-sm font-bold text-white transition-transform hover:scale-105"
                 >
                   Fahrzeug anfragen
@@ -70,7 +70,14 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {company.name}. Alle Rechte vorbehalten.
           </p>
-          <p>{company.founder} · {company.address.city}</p>
+          <nav className="flex gap-5">
+            <a href="/impressum" className="transition-colors hover:text-brand-sky">
+              Impressum
+            </a>
+            <a href="/datenschutz" className="transition-colors hover:text-brand-sky">
+              Datenschutz
+            </a>
+          </nav>
         </div>
       </div>
     </footer>

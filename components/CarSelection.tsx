@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
-import { cars, formatChf, type CarId } from "@/lib/company";
+import { cars, formatChf, kmExtraPrice, kmIncluded, type CarId } from "@/lib/company";
+import CarGallery from "./CarGallery";
 
 interface CarSelectionProps {
   selected: CarId | null;
@@ -27,19 +27,27 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
           aria-label="Fahrzeugauswahl"
           className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {cars.map((car) => {
+          {cars.map((car, carIndex) => {
             const isActive = selected === car.id;
             const disabled = !car.available;
+            const select = () => !disabled && onSelect(car.id);
             return (
-              <button
-                type="button"
+              // Kein <button>, weil die Galerie eigene Buttons enthält.
+              <div
                 key={car.id}
                 role="radio"
                 aria-checked={isActive}
                 aria-disabled={disabled}
-                disabled={disabled}
-                onClick={() => !disabled && onSelect(car.id)}
-                className={`group relative overflow-hidden rounded-2xl border text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-sky ${
+                aria-label={car.name}
+                tabIndex={disabled ? -1 : 0}
+                onClick={select}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    select();
+                  }
+                }}
+                className={`group relative cursor-pointer overflow-hidden rounded-2xl border text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-sky ${
                   disabled
                     ? "cursor-not-allowed border-ink-border bg-ink-card opacity-60"
                     : isActive
@@ -49,7 +57,7 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
               >
                 {/* Auswahl-Indikator (Radio-Styling) – bei Nicht-Verfügbarkeit ausgeblendet */}
                 <span
-                  className={`absolute right-4 top-4 z-10 flex h-7 w-7 items-center justify-center rounded-full border-2 transition-all ${
+                  className={`absolute right-4 top-4 z-30 flex h-7 w-7 items-center justify-center rounded-full border-2 transition-all ${
                     disabled
                       ? "hidden"
                       : isActive
@@ -71,44 +79,20 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                   </svg>
                 </span>
 
-                {/* Bild-Platzhalter: später durch echtes Bild ersetzen.
-                    Lege Bilder unter /public/cars/ ab und setze car.image. */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-zinc-800 to-ink">
+                <div className="relative">
                   {/* Overlay bei Nicht-Verfügbarkeit */}
                   {disabled && (
-                    <div className="absolute inset-0 z-10 flex items-center justify-center bg-ink/70">
+                    <div className="absolute inset-0 z-20 flex items-center justify-center bg-ink/70">
                       <span className="rounded-full border border-zinc-500 bg-ink/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-200">
                         Aktuell nicht verfügbar
                       </span>
                     </div>
                   )}
-                  {car.image ? (
-                    <Image
-                      src={car.image}
-                      alt={car.name}
-                      fill
-                      className={`object-cover transition-transform duration-500 ${
-                        disabled ? "grayscale" : "group-hover:scale-105"
-                      }`}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  ) : (
-                    <div className="flex h-full flex-col items-center justify-center gap-2 text-zinc-500">
-                      <svg
-                        className="h-12 w-12"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                      >
-                        <path d="M3 13l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 8l2 5M5 13h14M5 13v4m14-4v4M7 17h.01M17 17h.01" />
-                        <rect x="3" y="13" width="18" height="4" rx="1" />
-                      </svg>
-                      <span className="text-xs uppercase tracking-wider">
-                        Bild folgt
-                      </span>
-                    </div>
-                  )}
+                  <CarGallery
+                    images={car.images}
+                    dimmed={disabled}
+                    priority={carIndex === 0}
+                  />
                 </div>
 
                 {/* Karten-Inhalt */}
@@ -146,6 +130,10 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                     </div>
                   </div>
 
+                  <p className="mt-2 text-[11px] leading-tight text-zinc-500">
+                    {kmIncluded}, danach {kmExtraPrice}/km
+                  </p>
+
                   <span
                     className={`mt-4 block text-sm font-semibold ${
                       disabled
@@ -162,7 +150,7 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                         : "Auswählen"}
                   </span>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>

@@ -8,6 +8,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Platz für die fixierte Navigation beim Springen zu #abschnitten */
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -30,4 +32,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 input[type="date"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
+}
+
+/* Laufband anhalten, wenn jemand reduzierte Bewegung eingestellt hat */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+  }
 }
