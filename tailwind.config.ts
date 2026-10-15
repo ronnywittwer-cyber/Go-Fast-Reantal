@@ -38,9 +38,16 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        // Endlos-Laufband: Inhalt ist doppelt vorhanden, -50% = nahtlos
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.6s ease-out both",
+        marquee: "marquee 45s linear infinite",
+        "marquee-reverse": "marquee 60s linear infinite reverse",
       },
     },
   },

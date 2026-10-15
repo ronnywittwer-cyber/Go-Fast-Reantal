@@ -4,6 +4,7 @@ import Conditions from "@/components/Conditions";
 import BookingSection from "@/components/BookingSection";
 import Footer from "@/components/Footer";
 import BusinessJsonLd from "@/components/BusinessJsonLd";
+import SpeedBand from "@/components/SpeedBand";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <BusinessJsonLd />
       <Navbar />
       <Hero />
+      <SpeedBand />
       {/* Fahrzeugauswahl + Buchungsformular teilen sich den State;
           die Konditionen liegen dazwischen (über dem Formular). */}
       <BookingSection between={<Conditions />} />

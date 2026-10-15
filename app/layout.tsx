@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { siteDescription, siteTitle, siteUrl } from "@/lib/site";
 import { kmIncluded } from "@/lib/company";
@@ -43,7 +44,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de-CH">
+    <html lang="de-CH" className={GeistSans.variable}>
       <body>
         {children}
         <WhatsAppButton />
