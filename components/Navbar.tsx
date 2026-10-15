@@ -19,6 +19,9 @@ export default function Navbar() {
           <a href="/#konditionen" className="transition-colors hover:text-white">
             Konditionen
           </a>
+          <a href="/#faq" className="transition-colors hover:text-white">
+            FAQ
+          </a>
           <a href="#kontakt" className="transition-colors hover:text-white">
             Kontakt
           </a>

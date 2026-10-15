@@ -5,6 +5,7 @@ import BookingSection from "@/components/BookingSection";
 import Footer from "@/components/Footer";
 import BusinessJsonLd from "@/components/BusinessJsonLd";
 import SpeedBand from "@/components/SpeedBand";
+import Faq from "@/components/Faq";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       {/* Fahrzeugauswahl + Buchungsformular teilen sich den State;
           die Konditionen liegen dazwischen (über dem Formular). */}
       <BookingSection between={<Conditions />} />
+      <Faq />
       <Footer />
     </main>
   );

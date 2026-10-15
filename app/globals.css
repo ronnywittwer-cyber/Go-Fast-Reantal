@@ -8,6 +8,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Platz für die fixierte Navigation beim Springen zu #abschnitten */
+  scroll-padding-top: 5rem;
 }
 
 body {

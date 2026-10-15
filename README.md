@@ -13,6 +13,7 @@ Gebaut mit **Next.js (App Router)**, **TypeScript** und **Tailwind CSS**.
 - 🔗 Auswahl oben wird automatisch ins Formular übernommen
 - ✉️ Buchungsanfragen per E-Mail (Resend) inkl. Ausweis als Anhang
 - ⚖️ Impressum & Datenschutzerklärung (Schweizer DSG)
+- ❓ FAQ mit aufklappbaren Fragen (`lib/faq.ts`), inkl. Google-FAQ-Daten
 - 💬 Schwebender WhatsApp-Button (Nummer in `lib/company.ts`)
 - 🔎 SEO: Metadaten, Sitemap, robots.txt, Google-Unternehmensdaten (JSON-LD), Favicon & Vorschaubild für geteilte Links
 

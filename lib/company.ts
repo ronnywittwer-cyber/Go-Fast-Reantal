@@ -42,6 +42,15 @@ export const kmPerMonth = `${kmPolicy.includedPerMonth.toLocaleString("de-CH")} 
 export const kmIncluded = `${kmPerMonth} inklusive`;
 export const kmExtraPrice = `CHF ${kmPolicy.extraChfPerKm.toFixed(2)}`;
 
+// Mietregeln (für Konditionen & FAQ)
+export const rentalTerms = {
+  minAge: 18,
+  // 0 = keine Mindestdauer, auch Neulenker
+  licenseMinYears: 0,
+  depositChf: 1000,
+  deductibleChf: 1000, // Selbstbehalt im Schadenfall
+} as const;
+
 // Mietbedingungen & Konditionen
 export const conditions = [
   {
@@ -57,12 +66,12 @@ export const conditions = [
   {
     icon: "shield",
     title: "Voll versichert",
-    text: "Alle Fahrzeuge sind voll versichert – Sie sind rundum abgesichert unterwegs.",
+    text: `Alle Fahrzeuge sind voll versichert. Im Schadenfall beträgt der Selbstbehalt ${formatChf(rentalTerms.deductibleChf)}`,
   },
   {
     icon: "wallet",
-    title: "Kaution 1’000.– CHF",
-    text: "Bei Abholung wird eine Kaution von 1’000.– CHF hinterlegt.",
+    title: `Kaution ${formatChf(rentalTerms.depositChf)}`,
+    text: `Bei Abholung wird eine Kaution von ${formatChf(rentalTerms.depositChf)} hinterlegt – Sie erhalten sie bei der Rückgabe sofort zurück.`,
   },
   {
     icon: "fuel",
