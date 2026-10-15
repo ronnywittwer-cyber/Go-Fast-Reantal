@@ -1,4 +1,5 @@
 import { company, kmIncluded } from "@/lib/company";
+import { CarIcon, carIconCount } from "./CarIcons";
 
 // Wiedererkennungs-Element: zwei gekreuzte, endlos laufende Bänder –
 // wie Absperrband an der Rennstrecke. Läuft ohne JavaScript (reines CSS).
@@ -13,32 +14,17 @@ const items = [
   `${company.address.city} · Berner Oberland`,
 ];
 
-// Pfeil im Stil des Logos als Trennzeichen
-function Arrow({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 32 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M2 8h24M20 2l7 6-7 6" />
-    </svg>
-  );
-}
-
 function Track({
   animation,
   textClass,
-  arrowClass,
+  iconClass,
+  facingLeft = false,
 }: {
   animation: string;
   textClass: string;
-  arrowClass: string;
+  iconClass: string;
+  // Autos schauen in Laufrichtung des Bandes
+  facingLeft?: boolean;
 }) {
   // Liste 2× pro Hälfte, damit auch breite Bildschirme gefüllt sind;
   // die zweite Hälfte ist eine Kopie für den nahtlosen Übergang.
@@ -56,7 +42,13 @@ function Track({
               <span className={`whitespace-nowrap px-6 ${textClass}`}>
                 {item}
               </span>
-              <Arrow className={`h-4 w-8 shrink-0 ${arrowClass}`} />
+              {/* Trennzeichen: abwechselnd verschiedene Autos */}
+              <CarIcon
+                variant={i % carIconCount}
+                className={`h-6 w-12 shrink-0 sm:h-7 sm:w-14 ${iconClass} ${
+                  facingLeft ? "-scale-x-100" : ""
+                }`}
+              />
             </li>
           ))}
         </ul>
@@ -77,7 +69,7 @@ export default function SpeedBand() {
         <Track
           animation="animate-marquee-reverse"
           textClass="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-400 sm:text-base"
-          arrowClass="text-brand-sky/50"
+          iconClass="text-brand-sky/50"
         />
       </div>
 
@@ -86,7 +78,8 @@ export default function SpeedBand() {
         <Track
           animation="animate-marquee"
           textClass="text-base font-black uppercase italic tracking-wide text-white sm:text-xl"
-          arrowClass="text-brand-sky"
+          iconClass="text-white/90"
+          facingLeft
         />
       </div>
     </div>
