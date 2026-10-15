@@ -32,6 +32,41 @@ function error(message: string, status = 400) {
   return NextResponse.json({ ok: false, error: message }, { status });
 }
 
+// --- Spam-Schutz -----------------------------------------------------------
+// 1) Honeypot: das Feld "website" ist für Menschen unsichtbar. Bots füllen es.
+// 2) Zeit-Check: Menschen brauchen mehr als 3 Sekunden für das Formular.
+// 3) Mengen-Begrenzung: max. 5 Anfragen pro 10 Minuten und IP-Adresse
+//    (pro Server-Instanz; reicht gegen einfache Spam-Wellen).
+// Bei 1) und 2) antworten wir mit "ok", senden aber nichts – so merkt der Bot
+// nicht, dass er blockiert wurde.
+const MIN_FILL_MS = 3_000;
+const RATE_LIMIT = 5;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
+const recentRequests = new Map<string, number[]>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const hits = (recentRequests.get(ip) ?? []).filter(
+    (t) => now - t < RATE_WINDOW_MS,
+  );
+  hits.push(now);
+  recentRequests.set(ip, hits);
+  // Speicher klein halten
+  if (recentRequests.size > 1000) {
+    for (const [key, times] of recentRequests) {
+      if (times.every((t) => now - t >= RATE_WINDOW_MS)) recentRequests.delete(key);
+    }
+  }
+  return hits.length > RATE_LIMIT;
+}
+
+function looksLikeBot(formData: FormData): boolean {
+  if (String(formData.get("website") ?? "").trim() !== "") return true;
+  const startedAt = Number(formData.get("startedAt"));
+  if (!Number.isFinite(startedAt) || startedAt <= 0) return true;
+  return Date.now() - startedAt < MIN_FILL_MS;
+}
+
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.BOOKING_TO_EMAIL;
@@ -45,11 +80,27 @@ export async function POST(request: Request) {
     );
   }
 
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+    request.headers.get("x-real-ip") ||
+    "unknown";
+  if (isRateLimited(ip)) {
+    return error(
+      "Zu viele Anfragen in kurzer Zeit. Bitte versuchen Sie es in ein paar Minuten erneut oder rufen Sie uns an.",
+      429,
+    );
+  }
+
   let formData: FormData;
   try {
     formData = await request.formData();
   } catch {
     return error("Ungültige Anfrage.");
+  }
+
+  if (looksLikeBot(formData)) {
+    console.warn("Buchung: vermutlich Spam, verworfen.", { ip });
+    return NextResponse.json({ ok: true });
   }
 
   const field = (name: string) => String(formData.get(name) ?? "").trim();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cars, maxUploadBytes, type CarId } from "@/lib/company";
 
 interface ContactFormProps {
@@ -34,6 +34,10 @@ export default function ContactForm({
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // Spam-Schutz: Zeitpunkt, ab dem das Formular sichtbar war (erst im Browser
+  // setzen, sonst stünde hier die Build-Zeit).
+  const [startedAt, setStartedAt] = useState(0);
+  useEffect(() => setStartedAt(Date.now()), []);
 
   function validate(formData: FormData): FormErrors {
     const next: FormErrors = {};
@@ -116,6 +120,7 @@ export default function ContactForm({
       setSubmitted(true);
       form.reset();
       setIdFileName("");
+      setStartedAt(Date.now());
     } catch {
       setSendError(
         "Keine Verbindung. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
@@ -165,6 +170,12 @@ export default function ContactForm({
       noValidate
       className="mx-auto max-w-2xl rounded-2xl border border-ink-border bg-ink-card p-6 sm:p-8"
     >
+      {/* Spam-Schutz: unsichtbar für Menschen (siehe app/api/booking/route.ts) */}
+      <input type="hidden" name="startedAt" value={startedAt} />
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor="website">Website (bitte leer lassen)</label>
+        <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       {/* Name */}
       <div className="grid gap-5 sm:grid-cols-2">
         <div data-error={Boolean(errors.firstName)}>
