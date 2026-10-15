@@ -79,6 +79,20 @@ export const conditions = [
 // Max. Grösse für den Ausweis-Upload. Vercel erlaubt ~4.5 MB pro Request.
 export const maxUploadBytes = 4 * 1024 * 1024;
 
+// Vorlaufzeit für Buchungen in Tagen: 0 = ab heute buchbar, 1 = ab morgen …
+export const bookingLeadDays = 0;
+
+// Frühestes buchbares Datum als "YYYY-MM-DD" (Schweizer Zeit).
+export function earliestBookingDate(now: Date = new Date()): string {
+  const day = new Date(now.getTime() + bookingLeadDays * 86_400_000);
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Zurich",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(day);
+}
+
 export type CarId = "dacia-sandero" | "smart-forfour" | "opel-astra";
 
 export interface CarPrices {

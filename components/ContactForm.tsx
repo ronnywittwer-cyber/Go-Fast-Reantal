@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { cars, maxUploadBytes, type CarId } from "@/lib/company";
+import {
+  cars,
+  earliestBookingDate,
+  maxUploadBytes,
+  type CarId,
+} from "@/lib/company";
 
 interface ContactFormProps {
   selectedCar: CarId | null;
@@ -38,6 +43,11 @@ export default function ContactForm({
   // setzen, sonst stünde hier die Build-Zeit).
   const [startedAt, setStartedAt] = useState(0);
   useEffect(() => setStartedAt(Date.now()), []);
+  // Mietzeitraum: frühestes Datum erst im Browser bestimmen (sonst Build-Datum)
+  const [minDate, setMinDate] = useState("");
+  useEffect(() => setMinDate(earliestBookingDate()), []);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
 
   function validate(formData: FormData): FormErrors {
     const next: FormErrors = {};
@@ -62,7 +72,11 @@ export default function ContactForm({
     if (!phone) next.phone = "Bitte Telefonnummer angeben.";
     if (!car) next.car = "Bitte ein Fahrzeug auswählen.";
 
-    if (!dateFrom) next.dateFrom = "Bitte Startdatum wählen.";
+    if (!dateFrom) {
+      next.dateFrom = "Bitte Startdatum wählen.";
+    } else if (dateFrom < earliestBookingDate()) {
+      next.dateFrom = "Der Mietbeginn darf nicht in der Vergangenheit liegen.";
+    }
     if (!dateTo) {
       next.dateTo = "Bitte Enddatum wählen.";
     } else if (dateFrom && dateTo < dateFrom) {
@@ -120,6 +134,8 @@ export default function ContactForm({
       setSubmitted(true);
       form.reset();
       setIdFileName("");
+      setDateFrom("");
+      setDateTo("");
       setStartedAt(Date.now());
     } catch {
       setSendError(
@@ -275,6 +291,14 @@ export default function ContactForm({
             id="dateFrom"
             name="dateFrom"
             type="date"
+            min={minDate || undefined}
+            value={dateFrom}
+            onChange={(e) => {
+              const value = e.target.value;
+              setDateFrom(value);
+              // Ende automatisch nachziehen, wenn es sonst vor dem Beginn läge
+              if (value && dateTo && dateTo < value) setDateTo(value);
+            }}
             className={inputBase}
           />
           {errors.dateFrom && <p className={errorText}>{errors.dateFrom}</p>}
@@ -283,7 +307,15 @@ export default function ContactForm({
           <label htmlFor="dateTo" className={labelBase}>
             Mietende (Bis)
           </label>
-          <input id="dateTo" name="dateTo" type="date" className={inputBase} />
+          <input
+            id="dateTo"
+            name="dateTo"
+            type="date"
+            min={dateFrom || minDate || undefined}
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+            className={inputBase}
+          />
           {errors.dateTo && <p className={errorText}>{errors.dateTo}</p>}
         </div>
       </div>

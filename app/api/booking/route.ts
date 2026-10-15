@@ -8,7 +8,13 @@
 //   BOOKING_FROM_EMAIL  – Absender, z.B. "Go Fast Rental <buchung@deine-domain.ch>"
 
 import { NextResponse } from "next/server";
-import { cars, company, formatChf, maxUploadBytes } from "@/lib/company";
+import {
+  cars,
+  company,
+  earliestBookingDate,
+  formatChf,
+  maxUploadBytes,
+} from "@/lib/company";
 
 export const runtime = "nodejs";
 
@@ -122,6 +128,7 @@ export async function POST(request: Request) {
   if (!phone) return error("Bitte Telefonnummer angeben.");
   if (!car || !car.available) return error("Bitte ein verfügbares Fahrzeug auswählen.");
   if (!isDate(dateFrom) || !isDate(dateTo) || dateTo < dateFrom) return error("Bitte einen gültigen Mietzeitraum wählen.");
+  if (dateFrom < earliestBookingDate()) return error("Der Mietbeginn darf nicht in der Vergangenheit liegen.");
   if (!(idFile instanceof File) || idFile.size === 0) return error("Bitte Ausweis/Führerschein hochladen.");
   if (idFile.size > maxUploadBytes) return error("Die Datei ist zu gross (max. 4 MB).");
   if (idFile.type && !ALLOWED_TYPES.includes(idFile.type)) return error("Bitte ein Bild (JPG/PNG) oder PDF hochladen.");
