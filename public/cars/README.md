@@ -6,6 +6,7 @@ Pro Auto gibt es eine Bildergalerie, alle Bilder im **Hochformat 3:4
 - `dacia-1.jpg` … `dacia-7.jpg` – Dacia Sandero Stepway
 - `smart-1.jpg` … `smart-7.jpg` – Smart forfour
 - `opel-1.jpg` … `opel-6.jpg` – Opel Astra Caravan
+- `mg-1.jpg` … `mg-7.jpg` – MG ZS Luxury
 
 Das Bild mit der Nummer 1 ist jeweils das Hauptbild auf der Karte.
 Welche Bilder zu welchem Auto gehören, steht in `lib/company.ts`

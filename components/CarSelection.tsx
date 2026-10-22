@@ -25,7 +25,7 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
         <div
           role="radiogroup"
           aria-label="Fahrzeugauswahl"
-          className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         >
           {cars.map((car, carIndex) => {
             const isActive = selected === car.id;
@@ -111,14 +111,14 @@ export default function CarSelection({ selected, onSelect }: CarSelectionProps) 
                   </ul>
 
                   {/* Preise: Tag prominent, Woche & Monat daneben */}
-                  <div className="mt-4 flex items-end justify-between gap-3 rounded-xl border border-ink-border bg-ink/40 px-3 py-2.5">
-                    <div className="leading-none">
+                  <div className="mt-4 flex flex-wrap items-end justify-between gap-x-3 gap-y-2 rounded-xl border border-ink-border bg-ink/40 px-3 py-2.5">
+                    <div className="whitespace-nowrap leading-none">
                       <span className="text-xl font-black text-white">
                         {formatChf(car.prices.day)}
                       </span>
                       <span className="text-xs text-zinc-400"> / Tag</span>
                     </div>
-                    <div className="text-right text-xs leading-tight text-zinc-400">
+                    <div className="whitespace-nowrap text-right text-xs lg:text-left leading-tight text-zinc-400">
                       <div>
                         {formatChf(car.prices.week)}{" "}
                         <span className="text-zinc-500">/ Woche</span>
