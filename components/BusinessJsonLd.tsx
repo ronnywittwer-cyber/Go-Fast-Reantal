@@ -15,7 +15,6 @@ export default function BusinessJsonLd() {
     image: `${siteUrl}/opengraph-image`,
     telephone: company.phoneHref.replace("tel:", ""),
     ...(company.email ? { email: company.email } : {}),
-    founder: { "@type": "Person", name: company.founder },
     foundingDate: String(company.foundedYear),
     address: {
       "@type": "PostalAddress",

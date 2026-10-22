@@ -6,7 +6,7 @@ export const company = {
   founder: "Daniel Scharou",
   foundedYear: 2025,
   address: {
-    street: "Thun Strasse 23",
+    street: "Thunstrasse 23",
     zip: "3700",
     city: "Spiez",
     country: "Schweiz",
@@ -102,7 +102,7 @@ export function earliestBookingDate(now: Date = new Date()): string {
   }).format(day);
 }
 
-export type CarId = "dacia-sandero" | "smart-forfour" | "opel-astra";
+export type CarId = "dacia-sandero" | "smart-forfour" | "opel-astra" | "mg-zs";
 
 export interface CarPrices {
   day: number; // CHF pro Tag
@@ -187,6 +187,22 @@ export const cars: Car[] = [
     ]),
     prices: { day: 40, week: 150, month: 500 },
     specs: ["Kombi", "5 Sitze", "Automatik"],
+    available: true,
+  },
+  {
+    id: "mg-zs",
+    name: "MG ZS Luxury",
+    images: gallery("mg", "MG ZS Luxury", [
+      "Front",
+      "Seitlich vorne",
+      "Seitenansicht",
+      "Seitlich hinten",
+      "Heck",
+      "Kofferraum",
+      "Cockpit",
+    ]),
+    prices: { day: 60, week: 250, month: 850 },
+    specs: ["SUV", "5 Sitze", "Automatik"],
     available: true,
   },
 ];
