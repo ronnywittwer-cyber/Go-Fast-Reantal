@@ -85,16 +85,14 @@ Einrichtung:
 
 ### Impressum & Datenschutz
 Die Seiten `/impressum` und `/datenschutz` holen Adresse, Telefon usw. aus
-`lib/company.ts`. Dort noch **E-Mail-Adresse** (Pflicht im Impressum),
-**Rechtsform** und ggf. **UID** eintragen. Die Datenschutzerklärung nennt
+`lib/company.ts`. Dort ggf. noch **Rechtsform** und **UID** eintragen. Die Datenschutzerklärung nennt
 Vercel (Hosting) und Resend (E-Mail) als Dienstleister – bei einem anderen
 Anbieter bitte den Abschnitt in `app/datenschutz/page.tsx` anpassen.
 Die Texte sind eine sorgfältige Vorlage, ersetzen aber keine Rechtsberatung.
 
 ### SEO & Vorschaubild
-- `lib/site.ts`: Titel, Beschreibung und Webseiten-Adresse. Sobald die eigene
-  Domain steht, auf Vercel `NEXT_PUBLIC_SITE_URL` setzen (z.B.
-  `https://go-fast-rental.ch`).
+- `lib/site.ts`: Titel, Beschreibung und Webseiten-Adresse
+  (`https://www.gofastrental.ch`).
 - `app/opengraph-image.tsx`: Vorschaubild für WhatsApp, Facebook usw.
 - `components/BusinessJsonLd.tsx`: Unternehmensdaten für Google.
 - `app/icon.png` / `app/apple-icon.png`: Favicon und Homescreen-Icon.

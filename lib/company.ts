@@ -13,7 +13,7 @@ export const company = {
   },
   // TODO: Für Impressum & Datenschutz ergänzen. Leere Felder werden auf der
   // Webseite ausgeblendet – die E-Mail-Adresse ist im Impressum aber Pflicht.
-  email: "",
+  email: "info@gofastrental.ch",
   // z.B. "Einzelunternehmen" oder "GmbH"
   legalForm: "",
   // UID (CHE-xxx.xxx.xxx), nur falls im Handelsregister eingetragen
