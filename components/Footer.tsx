@@ -13,9 +13,6 @@ export default function Footer() {
               Ihre persönliche Autovermietung in {company.address.city}.{" "}
               {kmIncluded}, voll versichert, In- und Ausland erlaubt.
             </p>
-            <p className="mt-4 text-xs text-zinc-600">
-              Gegründet {company.foundedYear} von {company.founder}.
-            </p>
           </div>
 
           {/* Kontakt */}

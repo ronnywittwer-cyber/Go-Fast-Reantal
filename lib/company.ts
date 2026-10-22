@@ -6,7 +6,7 @@ export const company = {
   founder: "Daniel Scharou",
   foundedYear: 2025,
   address: {
-    street: "Thun Strasse 23",
+    street: "Thunstrasse 23",
     zip: "3700",
     city: "Spiez",
     country: "Schweiz",
