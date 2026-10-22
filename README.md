@@ -85,7 +85,7 @@ Einrichtung:
 
 ### Impressum & Datenschutz
 Die Seiten `/impressum` und `/datenschutz` holen Adresse, Telefon usw. aus
-`lib/company.ts`. Dort ggf. noch **Rechtsform** und **UID** eintragen. Die Datenschutzerklärung nennt
+`lib/company.ts` (Firmenname laut Handelsregister, Adresse, UID, E-Mail). Die Datenschutzerklärung nennt
 Vercel (Hosting) und Resend (E-Mail) als Dienstleister – bei einem anderen
 Anbieter bitte den Abschnitt in `app/datenschutz/page.tsx` anpassen.
 Die Texte sind eine sorgfältige Vorlage, ersetzen aber keine Rechtsberatung.

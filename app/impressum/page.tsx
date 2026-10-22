@@ -13,10 +13,9 @@ export default function ImpressumPage() {
     <LegalPage title="Impressum">
       <LegalSection title="Verantwortlich für den Inhalt">
         <p>
-          <strong className="text-white">{company.name}</strong>
-          {company.legalForm && <> ({company.legalForm})</>}
+          <strong className="text-white">{company.legalName}</strong>
           <br />
-          Inhaber: {company.founder}
+          Vertreten durch: {company.founder}
           <br />
           {company.address.street}
           <br />

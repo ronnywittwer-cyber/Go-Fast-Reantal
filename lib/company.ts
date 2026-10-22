@@ -3,21 +3,21 @@
 
 export const company = {
   name: "Go Fast Rental",
+  // Firmenname laut Handelsregister (für Impressum & Datenschutz)
+  legalName: "GoFast Rental GmbH",
   founder: "Daniel Scharou",
   foundedYear: 2025,
   address: {
-    street: "Thunstrasse 23",
+    street: "Thunstrasse 23B",
     zip: "3700",
     city: "Spiez",
     country: "Schweiz",
   },
-  // TODO: Für Impressum & Datenschutz ergänzen. Leere Felder werden auf der
-  // Webseite ausgeblendet – die E-Mail-Adresse ist im Impressum aber Pflicht.
+  // Für Impressum & Datenschutz. Leere Felder werden auf der Webseite
+  // ausgeblendet – die E-Mail-Adresse ist im Impressum aber Pflicht.
   email: "info@gofastrental.ch",
-  // z.B. "Einzelunternehmen" oder "GmbH"
-  legalForm: "",
   // UID (CHE-xxx.xxx.xxx), nur falls im Handelsregister eingetragen
-  uid: "",
+  uid: "CHE-351.053.592",
   openingHours: "Täglich 09:00 – 22:00 Uhr",
   phone: "076 221 38 24",
   // Telefonnummer in internationalem Format für tel:-Links

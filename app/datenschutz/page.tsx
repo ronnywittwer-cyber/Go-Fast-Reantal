@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function DatenschutzPage() {
   const contact = (
     <>
-      {company.name}, {company.founder}, {company.address.street},{" "}
+      {company.legalName}, {company.founder}, {company.address.street},{" "}
       {company.address.zip} {company.address.city}
       {company.email ? (
         <>
