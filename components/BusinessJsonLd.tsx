@@ -9,6 +9,7 @@ export default function BusinessJsonLd() {
     "@context": "https://schema.org",
     "@type": "AutoRental",
     name: company.name,
+    legalName: company.legalName,
     description: siteDescription,
     url: siteUrl,
     logo: `${siteUrl}/logo-go-fast.png`,
